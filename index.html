@@ -133,6 +133,11 @@
     transition:border-color .15s, background .15s, transform .15s; user-select:none;
   }
   .opt:hover{border-color:var(--orange-2); transform:translateY(-1px);}
+  .opt-card{width:100%;border-radius:12px;align-items:flex-start;padding:11px 14px;}
+  .opt-card .box{margin-top:3px;}
+  .opt-body{display:flex;flex-direction:column;gap:3px;}
+  .opt-body b{font-size:14px;color:var(--black);}
+  .opt-body small{font-size:12.8px;font-weight:500;color:#6d675e;line-height:1.45;}
   .opt input{position:absolute; opacity:0; pointer-events:none; width:0; height:0;}
   .opt .box{width:14px;height:14px;min-width:14px;border-radius:4px;border:2px solid #cfc6b5;display:grid;place-items:center;transition:all .15s;}
   .opt.is-radio .box{border-radius:50%;}
@@ -158,6 +163,8 @@
     border:2px dashed #E4CFA3; border-radius:16px; background:#fff; padding:28px 20px; text-align:center;
     transition:border-color .2s, background .2s; cursor:pointer; margin-bottom:12px;
   }
+  .dz-small{padding:16px 14px;margin:2px 0 8px;}
+  .dz-small .dz-title{font-size:14px;}
   .dropzone.drag{border-color:var(--orange-3); background:#FFF6E6;}
   .dz-icon{width:46px;height:46px;margin:0 auto 10px;}
   .dz-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:var(--black);margin:0 0 4px;}
@@ -354,8 +361,8 @@
    ===================================================================== */
 /* Paste the Web App URL of the Apps Script (tech-requirements-apps-script.gs).
    While it is empty, "Send to Us" opens Gmail with the answers (no files). */
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwWVR_qJpMKtxVUqlYfted9mw6g-k3kYaCJjrKXKOZGD4GMfpJIupUbitbnPJ9vLWTdTg/exec';
-const COMPANY_EMAIL = 'picshot.stuff@gmail.com';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbymzfNIxVcqR-OK38Bt0VTGFBACRqPDqVE1GOp0G-LfRi6ovciIuRvACSdqssSV8xpr/exec';
+const COMPANY_EMAIL = 'picshot.lab@gmail.com';
 const MAX_FILE_MB = 25;
 
 /* =====================================================================
@@ -366,22 +373,32 @@ const MAX_FILE_MB = 25;
 const SECTIONS = [
   { id:'art', title:'Art', sub:'How the art files should be prepared and delivered.', questions:[
     {id:'company', type:'text', label:'Company / contact name', required:true, full:true, placeholder:'So we know who to reply to'},
-    {id:'format', col:'File format', type:'check', label:'Source file format', options:['PSD','PSB'], other:true},
-    {id:'artsize', col:'Art size', type:'check', label:'In what size should the art be delivered?', options:['Full size','In-game size','Both'], other:true, otherPlaceholder:'e.g. only symbols in full size + in-game'},
-    {id:'static', col:'Statics', type:'check', label:'Do you need static exports?', options:['PNG','JPG','Not needed'], other:true},
-    {id:'texts', col:'Texts', type:'radio', label:'How should texts be made?', options:['Editable, with layer styles','Raster','Mixed'], other:true, otherPlaceholder:'Which texts may be rasterized and which must stay editable?'},
-    {id:'files', col:'Placement', type:'radio', label:'How should sizes and placement be agreed?', options:['Templates — we prepare them for your approval','We work directly in your files'], other:true},
-    {id:'canvas', col:'Max canvas', type:'text', label:'Maximum canvas size', hint:'The largest canvas / template size required for full-size art.', placeholder:'e.g. 3000×3000 px, 72 DPI'}
+    {id:'source', col:'Source files', type:'check', full:true, label:'What source files should be included in the final delivery?',
+     options:['Editable layered source files (PSD / PSB)','Flattened images (PNG / JPG)','Both editable source files and flattened images'], other:true, otherPlaceholder:'Other (please specify)'},
+    {id:'sizes', col:'Image sizes', type:'check', full:true, label:'What image sizes are required for the final delivery?',
+     options:['Full-size artwork only','In-game size only','Both full-size artwork and in-game size'], other:true, otherPlaceholder:'Other (please specify), e.g. 2× in-game size'},
+    {id:'workfiles', col:'Working files', type:'radio', full:true, label:'How should the working files and templates be prepared?',
+     options:[
+       {v:'PicShot prepares templates', d:'We prepare working templates based on agreed dimensions and technical requirements, submit them for your approval, and use the approved templates throughout production.'},
+       {v:'We work directly in your files', d:'You provide the working files or templates, and our team works within your existing structure.'}
+     ], other:true, otherPlaceholder:'Other (please specify)'},
+    {id:'texts', col:'Texts', type:'radio', full:true, label:'Are there any specific requirements for text layers?',
+     options:['All text must remain editable, font file provided','All text must be rasterized, font file provided','Mixed approach (some text editable, some rasterized)'], other:true, otherPlaceholder:'Please specify which texts stay editable and which are rasterized'}
   ]},
-  { id:'animation', title:'Animation', sub:'Spine setup and how you’ll review the animations.', questions:[
-    {id:'spine', col:'Spine', type:'radio', label:'Spine version', options:['3.8','4.1','4.2'], other:true, otherPlaceholder:'Exact version, e.g. 4.1.24'},
-    {id:'scale', col:'Export scale', type:'check', label:'Export scale', options:['1.0','0.5','2×'], other:true},
-    {id:'review', col:'Anim review', type:'check', label:'How will you review the animations?', full:true, options:['Video previews','In your own software / viewer'], other:true, otherPlaceholder:'Which software? Any recording rules?'}
+  { id:'animation', title:'Animation', sub:'Spine setup, restrictions and export settings.', questions:[
+    {id:'spine', col:'Spine version', type:'text', full:true, label:'Which version of Spine do you use?', placeholder:'Spine version, e.g. 4.1, 4.2, 4.3'},
+    {id:'spineshot', col:'Spine settings', type:'upload', full:true, label:'Screenshot of your Spine settings', hint:'Upload a screenshot with the Spine export / texture packer settings you need.'},
+    {id:'restricted', col:'Restricted features', type:'check', full:true, label:'Are there any Spine features or techniques that are restricted or not allowed in your projects?',
+     options:['Additive blending','Multiply blending','Mesh deformation','Clipping attachments','Path constraints','Physics constraints','No restrictions'], other:true, otherPlaceholder:'Please specify any restrictions or limitations regarding the use of the selected features'},
+    {id:'perf', col:'Performance', type:'textarea', full:true, label:'Are there any additional technical requirements or performance restrictions for Spine animations?',
+     placeholder:'Please describe any specific technical or performance requirements, including target limits or recommended values, if applicable.'}
   ]},
-  { id:'restrictions', title:'Restrictions & specifics', sub:'Anything we must or must not do — the more specific, the better.', questions:[
-    {id:'rules', col:'Restrictions', type:'textarea', rows:8, label:'Your restrictions and specific requirements', full:true,
-     hint:'Any specific requirements or rules — naming, restrictions, etc.',
-     placeholder:'Write as much as you need'}
+  { id:'general', title:'General', sub:'Naming, structure and technical references.', questions:[
+    {id:'naming', col:'Naming & folders', type:'radio', full:true, label:'Do you have specific file naming and folder structure requirements?',
+     options:['Yes, we have predefined naming conventions and folder structure','No, PicShot can use its standard structure','To be discussed'], other:true, otherPlaceholder:'Please share examples or documentation, if available'},
+    {id:'assets', col:'Asset organization', type:'textarea', full:true, label:'Do you have any specific requirements for asset organization?', hint:'Optional.', placeholder:'Describe how assets should be structured and organized'},
+    {id:'refs', col:'References', type:'radio', full:true, label:'Are there any reference projects we can use as technical examples?',
+     options:['Yes, we can provide source files and exports','We can provide exported assets only','No reference projects available'], hint:'Please attach or share links to relevant examples on the last step.'}
   ]}
 ];
 const FILES_SECTION = { id:'filesup', title:'Files & links', questions:[
@@ -396,16 +413,26 @@ function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&l
 
 function renderQ(q){
   const name = 'q_' + q.id;
-  let h = `<div class="q${q.full ? ' full' : ''}" data-id="${q.id}"><p class="q-title">${esc(q.label)}${q.required ? ' <span class="req-star">*</span>' : ''}</p>`;
+  let h = `<div class="q${q.full ? ' full' : ''}" data-id="${q.id}" data-type="${q.type}"><p class="q-title">${esc(q.label)}${q.required ? ' <span class="req-star">*</span>' : ''}</p>`;
   if(q.hint) h += `<p class="q-hint">${esc(q.hint)}</p>`;
   if(q.type === 'text') h += `<input type="text" class="q-text" id="${name}" placeholder="${esc(q.placeholder || '')}">`;
   if(q.type === 'textarea') h += `<textarea class="q-text" id="${name}" rows="${q.rows || 3}" placeholder="${esc(q.placeholder || '')}"></textarea>`;
   if(q.type === 'radio' || q.type === 'check'){
     const t = q.type === 'radio' ? 'radio' : 'checkbox';
-    h += '<div class="opts">' + q.options.map(o =>
-      `<label class="opt${t === 'radio' ? ' is-radio' : ''}"><input type="${t}" name="${name}" value="${esc(o)}"><span class="box"></span><span>${esc(o)}</span></label>`
-    ).join('') + '</div>';
+    h += '<div class="opts">' + q.options.map(o => {
+      const v = typeof o === 'string' ? o : o.v, d = typeof o === 'string' ? '' : o.d;
+      return d
+        ? `<label class="opt opt-card${t === 'radio' ? ' is-radio' : ''}"><input type="${t}" name="${name}" value="${esc(v)}"><span class="box"></span><span class="opt-body"><b>${esc(v)}</b><small>${esc(d)}</small></span></label>`
+        : `<label class="opt${t === 'radio' ? ' is-radio' : ''}"><input type="${t}" name="${name}" value="${esc(v)}"><span class="box"></span><span>${esc(v)}</span></label>`;
+    }).join('') + '</div>';
     if(q.other) h += `<input type="text" class="q-text q-detail" placeholder="${esc(q.otherPlaceholder || 'Your own answer')}">`;
+  }
+  if(q.type === 'upload'){
+    h += `<div class="dropzone dz-small" data-up="${q.id}" tabindex="0" role="button" aria-label="Upload screenshot">
+        <input type="file" accept="image/*,.pdf" multiple hidden>
+        <p class="dz-title">Drop a screenshot or <span>browse</span></p>
+        <p class="dz-sub">PNG / JPG, up to ${MAX_FILE_MB} MB</p>
+      </div><ul class="file-list" id="list_${q.id}"></ul>`;
   }
   return h + '</div>';
 }
@@ -488,6 +515,7 @@ function valuesOf(box){
   if(!box) return [];
   const vals = [...box.querySelectorAll('input:checked')].map(i => i.value);
   box.querySelectorAll('.q-text').forEach(t => { const v = t.value.trim(); if(v) vals.push(v); });
+  if(box.dataset.type === 'upload') (qFiles[box.dataset.id] || []).forEach(f => vals.push('📎 ' + f.name));
   return vals;
 }
 function answerOf(q){ return valuesOf(document.querySelector(`.q[data-id="${q.id}"]`)); }
@@ -498,7 +526,15 @@ function textVal(id){ const el = document.getElementById('q_' + id); return el ?
    FILES
    ===================================================================== */
 let files = [];
+const qFiles = {};   /* per-question uploads, e.g. Spine settings screenshot */
 const uploaded = new Set();
+const UPLOAD_PREFIX = {};
+ALL_SECTIONS.forEach(s => s.questions.forEach(q => { if(q.type === 'upload') UPLOAD_PREFIX[q.id] = q.col || q.label; }));
+function allUploads(){
+  const out = files.map(f => ({f, name:f.name}));
+  Object.keys(qFiles).forEach(id => qFiles[id].forEach(f => out.push({f, name:UPLOAD_PREFIX[id] + ' - ' + f.name})));
+  return out;
+}
 const fileKey = f => f.name + '|' + f.size + '|' + f.lastModified;
 const dz = document.getElementById('dropzone'), fileInput = document.getElementById('fileInput');
 dz.addEventListener('click', () => fileInput.click());
@@ -507,6 +543,37 @@ fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInpu
 ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('drag'); }));
 ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('drag'); }));
 dz.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+
+document.querySelectorAll('[data-up]').forEach(zone => {
+  const id = zone.dataset.up, inp = zone.querySelector('input');
+  qFiles[id] = [];
+  zone.addEventListener('click', () => inp.click());
+  zone.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); inp.click(); } });
+  inp.addEventListener('change', () => { addQFiles(id, inp.files); inp.value = ''; });
+  ['dragenter','dragover'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.add('drag'); }));
+  ['dragleave','drop'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.remove('drag'); }));
+  zone.addEventListener('drop', e => addQFiles(id, e.dataTransfer.files));
+});
+function addQFiles(id, list){
+  const tooBig = [];
+  [...list].forEach(f => {
+    if(f.size > MAX_FILE_MB * 1024 * 1024){ tooBig.push(f.name); return; }
+    if(!qFiles[id].some(x => fileKey(x) === fileKey(f))) qFiles[id].push(f);
+  });
+  if(tooBig.length) alert(`Too large to upload (over ${MAX_FILE_MB} MB): ${tooBig.join(', ')}`);
+  renderQFiles(id);
+}
+function removeQFile(id, i){ qFiles[id].splice(i, 1); renderQFiles(id); }
+function fileItem(f, rmCall){
+  const ext = (f.name.split('.').pop() || 'file').slice(0, 4);
+  return `<li class="file-item"><span class="file-ext">${esc(ext)}</span>
+    <div class="file-meta"><div class="file-name">${esc(f.name)}</div><div class="file-size">${fmtSize(f.size)}</div></div>
+    <button class="file-rm" aria-label="Remove ${esc(f.name)}" onclick="${rmCall}">×</button></li>`;
+}
+function renderQFiles(id){
+  document.getElementById('list_' + id).innerHTML = qFiles[id].map((f, i) => fileItem(f, `removeQFile('${id}',${i})`)).join('');
+  markAnswered(document.querySelector(`.q[data-id="${id}"]`));
+}
 
 function fmtSize(b){ return b < 1024*1024 ? Math.max(1, Math.round(b/1024)) + ' KB' : (b/1024/1024).toFixed(1) + ' MB'; }
 function addFiles(list){
@@ -522,12 +589,7 @@ function addFiles(list){
 }
 function removeFile(i){ files.splice(i, 1); renderFiles(); }
 function renderFiles(){
-  document.getElementById('fileList').innerHTML = files.map((f, i) => {
-    const ext = (f.name.split('.').pop() || 'file').slice(0, 4);
-    return `<li class="file-item"><span class="file-ext">${esc(ext)}</span>
-      <div class="file-meta"><div class="file-name">${esc(f.name)}</div><div class="file-size">${fmtSize(f.size)}</div></div>
-      <button class="file-rm" aria-label="Remove ${esc(f.name)}" onclick="removeFile(${i})">×</button></li>`;
-  }).join('');
+  document.getElementById('fileList').innerHTML = files.map((f, i) => fileItem(f, `removeFile(${i})`)).join('');
 }
 
 /* =====================================================================
@@ -559,7 +621,8 @@ function buildSummaryText(){
     sec.questions.forEach(q => { const v = answerOf(q); lines.push(q.label + ': ' + (v.length ? v.join('; ') : '—')); });
     lines.push('');
   });
-  lines.push('Attached files: ' + (files.length ? files.map(f => f.name).join(', ') : 'none'));
+  const ups = allUploads();
+  lines.push('Attached files: ' + (ups.length ? ups.map(u => u.name).join(', ') : 'none'));
   return lines.join('\n');
 }
 function answersObject(){
@@ -577,6 +640,7 @@ function clearAll(){
   document.querySelectorAll('.q-text').forEach(t => t.value = '');
   document.querySelectorAll('.q').forEach(q => q.classList.remove('answered'));
   files = []; uploaded.clear(); renderFiles();
+  Object.keys(qFiles).forEach(id => { qFiles[id] = []; renderQFiles(id); });
   renderSummary();
 }
 
@@ -619,7 +683,7 @@ async function sendToUs(){
     const url = 'https://mail.google.com/mail/?view=cm&fs=1'
       + '&to=' + encodeURIComponent(COMPANY_EMAIL)
       + '&su=' + encodeURIComponent('Technical requirements — ' + company)
-      + '&body=' + encodeURIComponent(buildSummaryText() + (files.length ? '\n\n(Please attach the files listed above to this email.)' : ''));
+      + '&body=' + encodeURIComponent(buildSummaryText() + (allUploads().length ? '\n\n(Please attach the files listed above to this email.)' : ''));
     window.open(url, '_blank');
     return;
   }
@@ -628,19 +692,20 @@ async function sendToUs(){
   btn.disabled = true;
   document.getElementById('progressModal').classList.add('show');
   try{
-    const total = files.length + 1;
-    for(let i = 0; i < files.length; i++){
-      const f = files[i];
-      setProgress(`Uploading file ${i + 1} of ${files.length}: ${f.name}`, i / total);
-      if(uploaded.has(fileKey(f))) continue;
-      await post({ action:'upload', submissionId, company, fileName:f.name, mimeType:f.type || 'application/octet-stream', data:await toBase64(f) });
-      uploaded.add(fileKey(f));
+    const ups = allUploads();
+    const total = ups.length + 1;
+    for(let i = 0; i < ups.length; i++){
+      const {f, name} = ups[i];
+      setProgress(`Uploading file ${i + 1} of ${ups.length}: ${name}`, i / total);
+      if(uploaded.has(name + '|' + fileKey(f))) continue;
+      await post({ action:'upload', submissionId, company, fileName:name, mimeType:f.type || 'application/octet-stream', data:await toBase64(f) });
+      uploaded.add(name + '|' + fileKey(f));
     }
-    setProgress('Saving your answers…', files.length / total);
+    setProgress('Saving your answers…', ups.length / total);
     await post({
       action:'submit', submissionId, company,
       links:textVal('links'),
-      files:files.map(f => f.name),
+      files:ups.map(u => u.name),
       answers:answersObject(),
       summaryText:buildSummaryText()
     });
