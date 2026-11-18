@@ -1249,7 +1249,6 @@ function setLang(lang){
   });
   document.querySelectorAll('[data-lang-btn]').forEach(b => b.classList.toggle('active', b.dataset.langBtn === lang));
   document.querySelectorAll('.lang-card').forEach(c => c.classList.toggle('current', c.getAttribute('onclick') === "pickLang('" + lang + "')"));
-  try{ localStorage.setItem('picshot_lang', lang); }catch(e){}
   applyQuestions();
   updateNav();
   renderSummary();
@@ -1258,7 +1257,7 @@ function pickLang(lang){ setLang(lang); goTo(1); }
 
 (function initLang(){
   let saved = null;
-  try{ saved = new URLSearchParams(location.search).get('lang') || localStorage.getItem('picshot_lang'); }catch(e){}
+  try{ saved = new URLSearchParams(location.search).get('lang'); }catch(e){}
   setLang(saved || 'en');
   if(saved){
     /* language already chosen (e.g. in the first form) — open straight on the intro */
