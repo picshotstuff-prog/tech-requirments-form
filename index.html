@@ -46,6 +46,53 @@
   .ghost-btn{background:transparent;border:1.5px solid var(--line);color:#57534b;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:10px;cursor:pointer;font-family:inherit;}
   .ghost-btn:hover{border-color:var(--orange-2); color:var(--orange-3);}
 
+  /* ---------- Language picker & switcher ---------- */
+  .lang-switch{display:inline-flex;gap:2px;padding:3px;border:1.5px solid var(--line);border-radius:999px;background:var(--paper);}
+  .lang-switch button{border:none;background:transparent;border-radius:999px;padding:6px 11px;font-family:inherit;font-size:12px;font-weight:800;letter-spacing:.8px;color:var(--muted);cursor:pointer;transition:background .15s,color .15s;}
+  .lang-switch button:hover{color:var(--orange-3);}
+  .lang-switch button.active{color:#fff;background:linear-gradient(120deg,var(--orange-1),var(--orange-3));box-shadow:0 4px 12px rgba(239,127,26,.3);}
+  .lang-hero{max-width:620px;text-align:center;}
+  .lang-badge{margin:0 auto 14px auto;display:flex;align-items:center;justify-content:center;animation:badgeIn .7s cubic-bezier(.2,.8,.3,1.2) both;}
+  .lang-badge img{height:150px;width:auto;max-width:100%;object-fit:contain;display:block;}
+  @keyframes badgeIn{from{opacity:0;transform:scale(.6) rotate(-8deg);}to{opacity:1;transform:none;}}
+  .lang-greet{margin:0 0 10px 0;font-family:'Sora',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:clamp(34px,5.4vw,56px);font-weight:800;letter-spacing:-1.2px;line-height:1.15;}
+  .greet-reel{display:inline-flex;flex-direction:column;height:1.15em;overflow:hidden;vertical-align:top;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 82%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 82%,transparent 100%);}
+  .greet-reel span{display:block;height:1.15em;white-space:nowrap;background:linear-gradient(120deg,var(--orange-1),var(--orange-2),var(--orange-3));-webkit-background-clip:text;background-clip:text;color:transparent;animation:reel 7.5s cubic-bezier(.7,0,.25,1) infinite;}
+  @keyframes reel{0%,26%{transform:translateY(0);}33%,59%{transform:translateY(-100%);}66%,92%{transform:translateY(-200%);}100%{transform:translateY(-300%);}}
+  .lang-sub{font-size:15px;color:var(--muted);margin:0 0 30px 0;font-weight:600;}
+  .lang-sub i{font-style:normal;color:var(--orange-2);margin:0 6px;}
+  .lang-list{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:8px;box-shadow:0 24px 60px rgba(20,20,20,.08),0 2px 6px rgba(20,20,20,.04);text-align:left;}
+  .lang-card{position:relative;width:100%;display:flex;align-items:center;gap:18px;padding:16px 18px;border:none;border-radius:16px;background:transparent;cursor:pointer;font-family:inherit;text-align:left;transition:background .25s ease,transform .25s ease;}
+  .lang-card + .lang-card{margin-top:2px;}
+  .lang-card + .lang-card::before{content:"";position:absolute;left:18px;right:18px;top:-2px;height:1px;background:var(--line);transition:opacity .2s;}
+  .lang-card:hover::before,.lang-card:hover + .lang-card::before,.lang-card:focus-visible::before,.lang-card:focus-visible + .lang-card::before{opacity:0;}
+  .lang-code{width:52px;height:52px;flex-shrink:0;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;letter-spacing:1px;color:var(--orange-3);background:#FFF3DE;transition:all .25s ease;}
+  .lang-text{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;}
+  .lang-name{font-family:'Sora',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:20px;font-weight:700;color:var(--black);transition:color .25s;}
+  .lang-cta{font-size:13px;color:var(--muted);font-weight:500;transition:color .25s;}
+  .lang-go{width:38px;height:38px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#cdbfa6;border:1.5px solid var(--line);transition:all .25s ease;}
+  .lang-go svg{width:18px;height:18px;}
+  .lang-card:hover,.lang-card:focus-visible{background:linear-gradient(120deg,var(--orange-1),var(--orange-3));outline:none;transform:scale(1.015);box-shadow:0 14px 30px rgba(239,127,26,.30);}
+  .lang-card:hover .lang-code,.lang-card:focus-visible .lang-code{background:rgba(255,255,255,.22);color:#fff;}
+  .lang-card:hover .lang-name,.lang-card:focus-visible .lang-name{color:#fff;}
+  .lang-card:hover .lang-cta,.lang-card:focus-visible .lang-cta{color:rgba(255,255,255,.85);}
+  .lang-card:hover .lang-go,.lang-card:focus-visible .lang-go{color:var(--orange-3);background:#fff;border-color:#fff;transform:translateX(3px);}
+  .lang-card.current .lang-go{color:var(--orange-3);border-color:#F3C77E;}
+  .lang-note{margin:22px 0 0 0;font-size:13px;color:var(--muted);}
+  @media (max-width:640px){
+    .lang-badge img{height:96px;}
+    .lang-sub{font-size:13px;margin-bottom:22px;}
+    .lang-sub i{margin:0 3px;}
+    .lang-card{gap:14px;padding:13px 12px;}
+    .lang-code{width:44px;height:44px;font-size:14px;}
+    .lang-name{font-size:17px;}
+    .lang-switch button{padding:5px 8px;font-size:11px;}
+  }
+  @media (prefers-reduced-motion:reduce){ .greet-reel span{animation:none;} .lang-badge{animation:none;} }
+
+  .top-right{display:flex;align-items:center;gap:16px;}
+  @media (max-width:700px){ .top-right .doc-tag{display:none;} }
+
   /* ---------- Deck & slides ---------- */
   .deck{flex:1; position:relative; display:flex; align-items:stretch; justify-content:center; overflow-y:auto; overflow-x:hidden; padding:0 16px;}
   .slide:not(.active){overflow:hidden;}
@@ -252,7 +299,14 @@
 
   <div class="topbar">
     <span class="badge-wrap"><img src="picshot-logo.png" alt="PicShot Studio" onerror="this.style.display='none';"></span>
-    <span class="doc-tag">Technical Requirements</span>
+    <div class="top-right">
+      <span class="doc-tag" data-i18n="doc_tag">Technical Requirements</span>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="en" onclick="setLang('en')">EN</button>
+        <button type="button" data-lang-btn="uk" onclick="setLang('uk')">UA</button>
+        <button type="button" data-lang-btn="ru" onclick="setLang('ru')">RU</button>
+      </div>
+    </div>
   </div>
 
   <div class="deck" id="deck">
@@ -274,18 +328,48 @@
       </span>
     </div>
 
-    <!-- Intro -->
-    <section class="slide intro active">
-      <div class="slide-inner">
-        <span class="eyebrow">Step 2 · Technical requirements</span>
-        <h1 class="slide-title">Now, the <span class="accent">technical side</span></h1>
-        <p class="slide-sub">Our managers are preparing your workspace — next, tell us how your files should look. This way every delivery matches your pipeline from the first try, without rework.</p>
-        <div class="howto">
-          <div class="howto-row"><span class="howto-ic">✓</span><div><b>Pick an option or write your own</b> — every question has a field for your answer.</div></div>
-          <div class="howto-row"><span class="howto-ic">↷</span><div><b>Not sure? Skip it.</b> Your manager will clarify open points with you.</div></div>
-          <div class="howto-row"><span class="howto-ic">⇪</span><div><b>Have a spec or template?</b> Upload it on the last step — that’s often enough.</div></div>
+    <!-- Slide: Language picker -->
+    <section class="slide lang-slide active" data-slide="lang">
+      <div class="slide-inner lang-hero">
+        <div class="lang-badge"><img src="picshot-logo.png" alt="PicShot Studio" class="badge-img" onerror="this.style.display='none';"></div>
+        <h1 class="lang-greet" aria-label="Welcome">
+          <span class="greet-reel" aria-hidden="true">
+            <span>Welcome</span><span>Вітаємо</span><span>Добро пожаловать</span><span>Welcome</span>
+          </span>
+        </h1>
+        <p class="lang-sub">Choose your language <i>·</i> Оберіть мову <i>·</i> Выберите язык</p>
+        <div class="lang-list">
+          <button type="button" class="lang-card" onclick="pickLang('en')">
+            <span class="lang-code">EN</span>
+            <span class="lang-text"><span class="lang-name">English</span><span class="lang-cta">Continue in English</span></span>
+            <span class="lang-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <button type="button" class="lang-card" onclick="pickLang('uk')">
+            <span class="lang-code">UA</span>
+            <span class="lang-text"><span class="lang-name">Українська</span><span class="lang-cta">Продовжити українською</span></span>
+            <span class="lang-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <button type="button" class="lang-card" onclick="pickLang('ru')">
+            <span class="lang-code">RU</span>
+            <span class="lang-text"><span class="lang-name">Русский</span><span class="lang-cta">Продолжить на русском</span></span>
+            <span class="lang-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
         </div>
-        <button class="btn btn-primary intro-btn" onclick="goTo(1)">Start →</button>
+        <p class="lang-note" data-i18n="lang_note">You can switch the language at any time in the top corner.</p>
+      </div>
+    </section>
+    <!-- Intro -->
+    <section class="slide intro">
+      <div class="slide-inner">
+        <span class="eyebrow" data-i18n="intro_eyebrow">Step 2 · Technical requirements</span>
+        <h1 class="slide-title" data-i18n="intro_title">Now, the <span class="accent">technical side</span></h1>
+        <p class="slide-sub" data-i18n="intro_sub">Our managers are preparing your workspace — next, tell us how your files should look. This way every delivery matches your pipeline from the first try, without rework.</p>
+        <div class="howto">
+          <div class="howto-row"><span class="howto-ic">✓</span><div data-i18n="howto1"><b>Pick an option or write your own</b> — every question has a field for your answer.</div></div>
+          <div class="howto-row"><span class="howto-ic">↷</span><div data-i18n="howto2"><b>Not sure? Skip it.</b> Your manager will clarify open points with you.</div></div>
+          <div class="howto-row"><span class="howto-ic">⇪</span><div data-i18n="howto3"><b>Have a spec or template?</b> Upload it on the last step — that’s often enough.</div></div>
+        </div>
+        <button class="btn btn-primary intro-btn" onclick="nextSlide()" data-i18n="intro_btn">Start →</button>
       </div>
     </section>
 
@@ -294,14 +378,14 @@
     <!-- Files & links -->
     <section class="slide" id="slide-files">
       <div class="slide-inner wide">
-        <span class="eyebrow">Last step</span>
-        <h1 class="slide-title">Files &amp; links</h1>
-        <p class="slide-sub">Have a technical specification, requirements, examples or templates? Upload them here or share a link — it helps us more than any answer.</p>
+        <span class="eyebrow" data-i18n="files_eyebrow">Last step</span>
+        <h1 class="slide-title" data-i18n="files_title">Files &amp; links</h1>
+        <p class="slide-sub" data-i18n="files_sub">Have a technical specification, requirements, examples or templates? Upload them here or share a link — it helps us more than any answer.</p>
         <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload files">
           <input type="file" id="fileInput" multiple hidden>
           <svg class="dz-icon" viewBox="0 0 60 60" aria-hidden="true"><path d="M18 40a10 10 0 0 1-1-19.9A13 13 0 0 1 43 22a9 9 0 0 1-1 18z" fill="none" stroke="url(#swooshGrad)" stroke-width="4" stroke-linejoin="round"/><path d="M30 41V28M24 33l6-6 6 6" fill="none" stroke="url(#swooshGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <p class="dz-title">Drag &amp; drop files or <span>browse</span></p>
-          <p class="dz-sub" id="dzSub">Up to 25 MB per file. Bigger files (PSD/PSB, archives)? Paste a link below.</p>
+          <p class="dz-title" data-i18n="dz_title">Drag &amp; drop files or <span>browse</span></p>
+          <p class="dz-sub" id="dzSub" data-i18n="dz_sub">Up to 25 MB per file. Bigger files (PSD/PSB, archives)? Paste a link below.</p>
         </div>
         <p class="file-warn" id="fileWarn"></p>
         <ul class="file-list" id="fileList"></ul>
@@ -312,16 +396,16 @@
     <!-- Summary -->
     <section class="slide" id="slide-summary">
       <div class="slide-inner wide">
-        <h1 class="slide-title">Your requirements, at a glance</h1>
-        <p class="slide-sub">Check your answers, then send them to us. You can jump back to any section.</p>
+        <h1 class="slide-title" data-i18n="sum_title">Your requirements, at a glance</h1>
+        <p class="slide-sub" data-i18n="sum_sub">Check your answers, then send them to us. You can jump back to any section.</p>
         <table class="summary-table">
-          <thead><tr><th>Section</th><th>Your answers</th></tr></thead>
+          <thead><tr><th data-i18n="sum_th1">Section</th><th data-i18n="sum_th2">Your answers</th></tr></thead>
           <tbody id="summary-body"></tbody>
         </table>
         <p class="open-note" id="openNote"></p>
         <div class="summary-actions">
-          <button class="btn btn-primary" id="sendBtn" onclick="sendToUs()">✉ Send to Us</button>
-          <button class="ghost-btn" onclick="clearAll()">Clear all answers</button>
+          <button class="btn btn-primary" id="sendBtn" onclick="sendToUs()" data-i18n="sum_send">✉ Send to Us</button>
+          <button class="ghost-btn" onclick="clearAll()" data-i18n="sum_clear">Clear all answers</button>
         </div>
       </div>
     </section>
@@ -331,7 +415,7 @@
   <div class="modal-overlay" id="progressModal">
     <div class="modal-card">
       <div class="spin"></div>
-      <h2>Sending your requirements…</h2>
+      <h2 data-i18n="prog_title">Sending your requirements…</h2>
       <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
       <p class="progress-label" id="progressLabel">Preparing…</p>
     </div>
@@ -341,9 +425,9 @@
   <div class="modal-overlay" id="successModal">
     <div class="modal-card">
       <div class="modal-icon"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M7 19 l7 7 L29 11" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h2>Got it — thank you!</h2>
-      <p>Your requirements and files are with us. Your manager will review them and get back to you to clarify any open points.</p>
-      <button class="btn btn-primary" onclick="document.getElementById('successModal').classList.remove('show')">Awesome!</button>
+      <h2 data-i18n="ok_title">Got it — thank you!</h2>
+      <p data-i18n="ok_text">Your requirements and files are with us. Your manager will review them and get back to you to clarify any open points.</p>
+      <button class="btn btn-primary" onclick="document.getElementById('successModal').classList.remove('show')" data-i18n="ok_btn">Awesome!</button>
     </div>
   </div>
 
@@ -407,13 +491,408 @@ const FILES_SECTION = { id:'filesup', title:'Files & links', questions:[
 const ALL_SECTIONS = [...SECTIONS, FILES_SECTION];
 
 /* =====================================================================
+   LANGUAGES — English is written in SECTIONS / the page itself; UA / RU below.
+   Answers sent to the sheet and email always stay in English.
+   ===================================================================== */
+const I18N = {
+ "uk": {
+  "doc_tag": "Технічні вимоги",
+  "lang_note": "Змінити мову можна будь-коли у верхньому куті.",
+  "intro_eyebrow": "Крок 2 · Технічні вимоги",
+  "intro_title": "Тепер — <span class=\"accent\">технічна частина</span>",
+  "intro_sub": "Наші менеджери вже налаштовують обрані вами інструменти — а тепер розкажіть, якими мають бути файли. Так кожне делівері з першого разу відповідатиме вашому пайплайну, без переробок.",
+  "howto1": "<b>Оберіть варіант або напишіть свій</b> — у кожному питанні є поле для вашої відповіді.",
+  "howto2": "<b>Не впевнені? Пропустіть.</b> Менеджер уточнить відкриті питання разом з вами.",
+  "howto3": "<b>Є ТЗ чи темплейт?</b> Завантажте його на останньому кроці — часто цього достатньо.",
+  "intro_btn": "Почати →",
+  "files_eyebrow": "Останній крок",
+  "files_title": "Файли й посилання",
+  "files_sub": "Маєте технічну специфікацію, вимоги, приклади чи темплейти? Завантажте їх тут або поділіться посиланням — це допоможе нам більше, ніж будь-яка відповідь.",
+  "dz_title": "Перетягніть файли або <span>оберіть</span>",
+  "dz_sub": "До 25 МБ на файл. Більші файли (PSD/PSB, архіви)? Вставте посилання нижче.",
+  "sum_title": "Ваші технічні вимоги",
+  "sum_sub": "Перевірте відповіді й надішліть їх нам. До будь-якого розділу можна повернутися.",
+  "sum_th1": "Розділ",
+  "sum_th2": "Ваші відповіді",
+  "sum_send": "✉ Надіслати нам",
+  "sum_clear": "Очистити відповіді",
+  "prog_title": "Надсилаємо ваші вимоги…",
+  "ok_title": "Отримали — дякуємо!",
+  "ok_text": "Ваші вимоги та файли вже в нас. Менеджер перегляне їх і звʼяжеться з вами, щоб уточнити відкриті питання.",
+  "ok_btn": "Чудово!"
+ },
+ "ru": {
+  "doc_tag": "Технические требования",
+  "lang_note": "Сменить язык можно в любой момент в верхнем углу.",
+  "intro_eyebrow": "Шаг 2 · Технические требования",
+  "intro_title": "Теперь — <span class=\"accent\">техническая часть</span>",
+  "intro_sub": "Наши менеджеры уже настраивают выбранные вами инструменты — а теперь расскажите, какими должны быть файлы. Так каждое деливери с первого раза будет соответствовать вашему пайплайну, без переделок.",
+  "howto1": "<b>Выберите вариант или напишите свой</b> — в каждом вопросе есть поле для вашего ответа.",
+  "howto2": "<b>Не уверены? Пропустите.</b> Менеджер уточнит открытые вопросы вместе с вами.",
+  "howto3": "<b>Есть ТЗ или темплейт?</b> Загрузите его на последнем шаге — часто этого достаточно.",
+  "intro_btn": "Начать →",
+  "files_eyebrow": "Последний шаг",
+  "files_title": "Файлы и ссылки",
+  "files_sub": "Есть техническая спецификация, требования, примеры или темплейты? Загрузите их здесь или поделитесь ссылкой — это поможет нам больше, чем любой ответ.",
+  "dz_title": "Перетащите файлы или <span>выберите</span>",
+  "dz_sub": "До 25 МБ на файл. Файлы больше (PSD/PSB, архивы)? Вставьте ссылку ниже.",
+  "sum_title": "Ваши технические требования",
+  "sum_sub": "Проверьте ответы и отправьте их нам. К любому разделу можно вернуться.",
+  "sum_th1": "Раздел",
+  "sum_th2": "Ваши ответы",
+  "sum_send": "✉ Отправить нам",
+  "sum_clear": "Очистить ответы",
+  "prog_title": "Отправляем ваши требования…",
+  "ok_title": "Получили — спасибо!",
+  "ok_text": "Ваши требования и файлы уже у нас. Менеджер просмотрит их и свяжется с вами, чтобы уточнить открытые вопросы.",
+  "ok_btn": "Отлично!"
+ }
+};
+const QTR = {
+ "uk": {
+  "q": {
+   "company": {
+    "label": "Компанія / контактна особа",
+    "placeholder": "Щоб ми знали, кому відповісти"
+   },
+   "source": {
+    "label": "Які вихідні файли потрібно передавати у фінальному делівері?",
+    "options": [
+     "Редаговані багатошарові файли (PSD / PSB)",
+     "Плоскі зображення (PNG / JPG)",
+     "І редаговані файли, і плоскі зображення"
+    ],
+    "otherPlaceholder": "Інше (уточніть)"
+   },
+   "sizes": {
+    "label": "У яких розмірах потрібно передавати фінальні зображення?",
+    "options": [
+     "Лише full-size",
+     "Лише in-game розмір",
+     "І full-size, і in-game розмір"
+    ],
+    "otherPlaceholder": "Інше (уточніть), напр. in-game ×2"
+   },
+   "workfiles": {
+    "label": "Як організувати роботу з робочими файлами та темплейтами?",
+    "options": [
+     {
+      "v": "PicShot готує темплейти",
+      "d": "Ми готуємо робочі темплейти за погодженими розмірами й технічними вимогами, надсилаємо їх вам на погодження та використовуємо затверджені темплейти протягом усього продакшену."
+     },
+     {
+      "v": "Працюємо безпосередньо у ваших файлах",
+      "d": "Ви надаєте робочі файли або темплейти, а наша команда працює в межах вашої наявної структури."
+     }
+    ],
+    "otherPlaceholder": "Інше (уточніть)"
+   },
+   "texts": {
+    "label": "Чи є особливі вимоги до текстових шарів?",
+    "options": [
+     "Увесь текст залишається редагованим, файл шрифту надається",
+     "Увесь текст растеризується, файл шрифту надається",
+     "Змішаний підхід (частина тексту редагована, частина растеризована)"
+    ],
+    "otherPlaceholder": "Уточніть, які тексти залишаються редагованими, а які растеризуються"
+   },
+   "spine": {
+    "label": "Яку версію Spine ви використовуєте?",
+    "placeholder": "Версія Spine, напр. 4.1, 4.2, 4.3"
+   },
+   "spineshot": {
+    "label": "Скриншот ваших налаштувань Spine",
+    "hint": "Завантажте скриншот із потрібними налаштуваннями експорту / texture packer у Spine."
+   },
+   "restricted": {
+    "label": "Чи є функції або техніки Spine, використання яких заборонене чи обмежене у ваших проєктах?",
+    "options": [
+     "Additive blending",
+     "Multiply blending",
+     "Mesh deformation",
+     "Clipping attachments",
+     "Path constraints",
+     "Physics constraints",
+     "Без обмежень"
+    ],
+    "otherPlaceholder": "Уточніть обмеження щодо використання обраних функцій"
+   },
+   "perf": {
+    "label": "Чи є додаткові технічні вимоги або обмеження продуктивності для анімацій у Spine?",
+    "placeholder": "Опишіть конкретні технічні вимоги чи вимоги до продуктивності, зокрема цільові ліміти або рекомендовані значення, якщо вони є."
+   },
+   "naming": {
+    "label": "Чи є у вас вимоги до неймінгу файлів і структури папок?",
+    "options": [
+     "Так, у нас є готові правила неймінгу та структура папок",
+     "Ні, PicShot може використовувати свою стандартну структуру",
+     "Обговоримо окремо"
+    ],
+    "otherPlaceholder": "Поділіться прикладами або документацією, якщо вони є"
+   },
+   "assets": {
+    "label": "Чи є особливі вимоги до організації асетів?",
+    "hint": "Необовʼязково.",
+    "placeholder": "Опишіть, як мають бути структуровані та організовані асети"
+   },
+   "refs": {
+    "label": "Чи є референсні проєкти, які ми можемо використати як технічні приклади?",
+    "options": [
+     "Так, можемо надати вихідні файли та експорти",
+     "Можемо надати лише експортовані асети",
+     "Референсних проєктів немає"
+    ],
+    "hint": "Прикріпіть приклади або поділіться посиланнями на останньому кроці."
+   },
+   "links": {
+    "label": "Посилання на специфікації, темплейти чи приклади файлів",
+    "placeholder": "Figma, Google Drive, Dropbox… одне посилання в рядку"
+   }
+  },
+  "sec": {
+   "art": {
+    "title": "Арт",
+    "sub": "Як готувати та передавати файли арту."
+   },
+   "animation": {
+    "title": "Анімація",
+    "sub": "Налаштування Spine, обмеження та параметри експорту."
+   },
+   "general": {
+    "title": "Загальне",
+    "sub": "Неймінг, структура та технічні референси."
+   },
+   "filesup": {
+    "title": "Файли й посилання",
+    "sub": ""
+   }
+  }
+ },
+ "ru": {
+  "q": {
+   "company": {
+    "label": "Компания / контактное лицо",
+    "placeholder": "Чтобы мы знали, кому ответить"
+   },
+   "source": {
+    "label": "Какие исходные файлы нужно передавать в финальном деливери?",
+    "options": [
+     "Редактируемые многослойные файлы (PSD / PSB)",
+     "Плоские изображения (PNG / JPG)",
+     "И редактируемые файлы, и плоские изображения"
+    ],
+    "otherPlaceholder": "Другое (уточните)"
+   },
+   "sizes": {
+    "label": "В каких размерах нужно передавать финальные изображения?",
+    "options": [
+     "Только full-size",
+     "Только in-game размер",
+     "И full-size, и in-game размер"
+    ],
+    "otherPlaceholder": "Другое (уточните), напр. in-game ×2"
+   },
+   "workfiles": {
+    "label": "Как организовать работу с рабочими файлами и темплейтами?",
+    "options": [
+     {
+      "v": "PicShot готовит темплейты",
+      "d": "Мы готовим рабочие темплейты по согласованным размерам и техническим требованиям, отправляем их вам на согласование и используем утверждённые темплейты на протяжении всего продакшена."
+     },
+     {
+      "v": "Работаем напрямую в ваших файлах",
+      "d": "Вы предоставляете рабочие файлы или темплейты, а наша команда работает в рамках вашей существующей структуры."
+     }
+    ],
+    "otherPlaceholder": "Другое (уточните)"
+   },
+   "texts": {
+    "label": "Есть ли особые требования к текстовым слоям?",
+    "options": [
+     "Весь текст остаётся редактируемым, файл шрифта предоставляется",
+     "Весь текст растеризуется, файл шрифта предоставляется",
+     "Смешанный подход (часть текста редактируемая, часть растеризованная)"
+    ],
+    "otherPlaceholder": "Уточните, какие тексты остаются редактируемыми, а какие растеризуются"
+   },
+   "spine": {
+    "label": "Какую версию Spine вы используете?",
+    "placeholder": "Версия Spine, напр. 4.1, 4.2, 4.3"
+   },
+   "spineshot": {
+    "label": "Скриншот ваших настроек Spine",
+    "hint": "Загрузите скриншот с нужными настройками экспорта / texture packer в Spine."
+   },
+   "restricted": {
+    "label": "Есть ли функции или техники Spine, использование которых запрещено или ограничено в ваших проектах?",
+    "options": [
+     "Additive blending",
+     "Multiply blending",
+     "Mesh deformation",
+     "Clipping attachments",
+     "Path constraints",
+     "Physics constraints",
+     "Без ограничений"
+    ],
+    "otherPlaceholder": "Уточните ограничения по использованию выбранных функций"
+   },
+   "perf": {
+    "label": "Есть ли дополнительные технические требования или ограничения по производительности для анимаций в Spine?",
+    "placeholder": "Опишите конкретные технические требования или требования к производительности, включая целевые лимиты или рекомендуемые значения, если они есть."
+   },
+   "naming": {
+    "label": "Есть ли у вас требования к неймингу файлов и структуре папок?",
+    "options": [
+     "Да, у нас есть готовые правила нейминга и структура папок",
+     "Нет, PicShot может использовать свою стандартную структуру",
+     "Обсудим отдельно"
+    ],
+    "otherPlaceholder": "Поделитесь примерами или документацией, если они есть"
+   },
+   "assets": {
+    "label": "Есть ли особые требования к организации ассетов?",
+    "hint": "Необязательно.",
+    "placeholder": "Опишите, как должны быть структурированы и организованы ассеты"
+   },
+   "refs": {
+    "label": "Есть ли референсные проекты, которые мы можем использовать как технические примеры?",
+    "options": [
+     "Да, можем предоставить исходные файлы и экспорты",
+     "Можем предоставить только экспортированные ассеты",
+     "Референсных проектов нет"
+    ],
+    "hint": "Прикрепите примеры или поделитесь ссылками на последнем шаге."
+   },
+   "links": {
+    "label": "Ссылки на спецификации, темплейты или примеры файлов",
+    "placeholder": "Figma, Google Drive, Dropbox… одна ссылка в строке"
+   }
+  },
+  "sec": {
+   "art": {
+    "title": "Арт",
+    "sub": "Как готовить и передавать файлы арта."
+   },
+   "animation": {
+    "title": "Анимация",
+    "sub": "Настройки Spine, ограничения и параметры экспорта."
+   },
+   "general": {
+    "title": "Общее",
+    "sub": "Нейминг, структура и технические референсы."
+   },
+   "filesup": {
+    "title": "Файлы и ссылки",
+    "sub": ""
+   }
+  }
+ }
+};
+const JS_TEXT = {
+ "en": {
+  "next": "Next →",
+  "back": "← Back",
+  "viewSummary": "View Summary →",
+  "section": "Section {i} of {n}",
+  "secHint": "not sure about something? skip it — we’ll clarify it together",
+  "own": "Your own answer",
+  "dzQ": "Drop a screenshot or <span>browse</span>",
+  "dzQSub": "PNG / JPG, up to {mb} MB",
+  "attached": "Attached files",
+  "empty": "Nothing filled in — we’ll go through it together",
+  "edit": "Edit →",
+  "openN": "✦ {n} question(s) left open — no problem, your manager will clarify them with you.",
+  "allDone": "✦ Everything is filled in — amazing, thank you!",
+  "confirmClear": "Clear all answers and attached files?",
+  "needName": "Please fill in Company / contact name — so we know who to reply to.",
+  "uploading": "Uploading file {i} of {n}: {name}",
+  "saving": "Saving your answers…",
+  "done": "Done!",
+  "preparing": "Preparing…",
+  "sent": "✓ Sent — thank you!",
+  "sendError": "Something went wrong while sending ({err}). Please check your connection and press “Send to Us” again — files that were already uploaded won’t be sent twice.",
+  "tooBig": "Too large to upload here (over {mb} MB): {names}. Please share a link to it below instead.",
+  "tooBigQ": "Too large to upload (over {mb} MB): {names}"
+ },
+ "uk": {
+  "next": "Далі →",
+  "back": "← Назад",
+  "viewSummary": "До підсумку →",
+  "section": "Розділ {i} з {n}",
+  "secHint": "не впевнені? пропустіть — уточнимо разом",
+  "own": "Ваш варіант",
+  "dzQ": "Перетягніть скриншот або <span>оберіть файл</span>",
+  "dzQSub": "PNG / JPG, до {mb} МБ",
+  "attached": "Прикріплені файли",
+  "empty": "Нічого не заповнено — пройдемося разом",
+  "edit": "Змінити →",
+  "openN": "✦ Відкритих питань: {n} — нічого страшного, менеджер уточнить їх разом з вами.",
+  "allDone": "✦ Усе заповнено — дякуємо!",
+  "confirmClear": "Очистити всі відповіді та прикріплені файли?",
+  "needName": "Будь ласка, вкажіть компанію / контактну особу — щоб ми знали, кому відповісти.",
+  "uploading": "Завантажуємо файл {i} з {n}: {name}",
+  "saving": "Зберігаємо відповіді…",
+  "done": "Готово!",
+  "preparing": "Готуємо…",
+  "sent": "✓ Надіслано — дякуємо!",
+  "sendError": "Під час надсилання сталася помилка ({err}). Перевірте підключення й натисніть «Надіслати нам» ще раз — уже завантажені файли повторно не надсилатимуться.",
+  "tooBig": "Завеликий для завантаження тут (понад {mb} МБ): {names}. Будь ласка, поділіться посиланням нижче.",
+  "tooBigQ": "Завеликий файл (понад {mb} МБ): {names}"
+ },
+ "ru": {
+  "next": "Далее →",
+  "back": "← Назад",
+  "viewSummary": "К итогу →",
+  "section": "Раздел {i} из {n}",
+  "secHint": "не уверены? пропустите — уточним вместе",
+  "own": "Ваш вариант",
+  "dzQ": "Перетащите скриншот или <span>выберите файл</span>",
+  "dzQSub": "PNG / JPG, до {mb} МБ",
+  "attached": "Прикреплённые файлы",
+  "empty": "Ничего не заполнено — пройдёмся вместе",
+  "edit": "Изменить →",
+  "openN": "✦ Открытых вопросов: {n} — ничего страшного, менеджер уточнит их вместе с вами.",
+  "allDone": "✦ Всё заполнено — спасибо!",
+  "confirmClear": "Очистить все ответы и прикреплённые файлы?",
+  "needName": "Пожалуйста, укажите компанию / контактное лицо — чтобы мы знали, кому ответить.",
+  "uploading": "Загружаем файл {i} из {n}: {name}",
+  "saving": "Сохраняем ответы…",
+  "done": "Готово!",
+  "preparing": "Готовим…",
+  "sent": "✓ Отправлено — спасибо!",
+  "sendError": "При отправке произошла ошибка ({err}). Проверьте подключение и нажмите «Отправить нам» ещё раз — уже загруженные файлы повторно не отправятся.",
+  "tooBig": "Слишком большой для загрузки здесь (больше {mb} МБ): {names}. Пожалуйста, поделитесь ссылкой ниже.",
+  "tooBigQ": "Слишком большой файл (больше {mb} МБ): {names}"
+ }
+};
+let LANG = 'en';
+function t(key, vars){
+  let s = (JS_TEXT[LANG] && JS_TEXT[LANG][key]) || JS_TEXT.en[key] || key;
+  if(vars) Object.keys(vars).forEach(k => { s = s.split('{' + k + '}').join(vars[k]); });
+  return s;
+}
+function qtr(q){ return LANG === 'en' ? null : (QTR[LANG].q[q.id] || null); }
+function qLabel(q){ const tr = qtr(q); return (tr && tr.label) || q.label; }
+function secTitle(sec){ const tr = LANG === 'en' ? null : QTR[LANG].sec[sec.id]; return (tr && tr.title) || sec.title; }
+/* English option value -> text in the current language (display only) */
+function optText(q, value){
+  if(!q.options) return value;
+  const i = q.options.findIndex(o => (typeof o === 'string' ? o : o.v) === value);
+  const tr = qtr(q);
+  if(i < 0 || !tr || !tr.options) return value;
+  const o = tr.options[i];
+  return typeof o === 'string' ? o : o.v;
+}
+
+
+/* =====================================================================
    RENDERING
    ===================================================================== */
 function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function renderQ(q){
   const name = 'q_' + q.id;
-  let h = `<div class="q${q.full ? ' full' : ''}" data-id="${q.id}" data-type="${q.type}"><p class="q-title">${esc(q.label)}${q.required ? ' <span class="req-star">*</span>' : ''}</p>`;
+  let h = `<div class="q${q.full ? ' full' : ''}" data-id="${q.id}" data-type="${q.type}"><p class="q-title"><span class="q-label">${esc(q.label)}</span>${q.required ? ' <span class="req-star">*</span>' : ''}</p>`;
   if(q.hint) h += `<p class="q-hint">${esc(q.hint)}</p>`;
   if(q.type === 'text') h += `<input type="text" class="q-text" id="${name}" placeholder="${esc(q.placeholder || '')}">`;
   if(q.type === 'textarea') h += `<textarea class="q-text" id="${name}" rows="${q.rows || 3}" placeholder="${esc(q.placeholder || '')}"></textarea>`;
@@ -422,16 +901,16 @@ function renderQ(q){
     h += '<div class="opts">' + q.options.map(o => {
       const v = typeof o === 'string' ? o : o.v, d = typeof o === 'string' ? '' : o.d;
       return d
-        ? `<label class="opt opt-card${t === 'radio' ? ' is-radio' : ''}"><input type="${t}" name="${name}" value="${esc(v)}"><span class="box"></span><span class="opt-body"><b>${esc(v)}</b><small>${esc(d)}</small></span></label>`
-        : `<label class="opt${t === 'radio' ? ' is-radio' : ''}"><input type="${t}" name="${name}" value="${esc(v)}"><span class="box"></span><span>${esc(v)}</span></label>`;
+        ? `<label class="opt opt-card${t === 'radio' ? ' is-radio' : ''}"><input type="${t}" name="${name}" value="${esc(v)}"><span class="box"></span><span class="opt-body"><b class="opt-text">${esc(v)}</b><small class="opt-desc">${esc(d)}</small></span></label>`
+        : `<label class="opt${t === 'radio' ? ' is-radio' : ''}"><input type="${t}" name="${name}" value="${esc(v)}"><span class="box"></span><span class="opt-text">${esc(v)}</span></label>`;
     }).join('') + '</div>';
     if(q.other) h += `<input type="text" class="q-text q-detail" placeholder="${esc(q.otherPlaceholder || 'Your own answer')}">`;
   }
   if(q.type === 'upload'){
     h += `<div class="dropzone dz-small" data-up="${q.id}" tabindex="0" role="button" aria-label="Upload screenshot">
         <input type="file" accept="image/*,.pdf" multiple hidden>
-        <p class="dz-title">Drop a screenshot or <span>browse</span></p>
-        <p class="dz-sub">PNG / JPG, up to ${MAX_FILE_MB} MB</p>
+        <p class="dz-title q-dz-title">Drop a screenshot or <span>browse</span></p>
+        <p class="dz-sub q-dz-sub">PNG / JPG, up to ${MAX_FILE_MB} MB</p>
       </div><ul class="file-list" id="list_${q.id}"></ul>`;
   }
   return h + '</div>';
@@ -443,10 +922,10 @@ SECTIONS.forEach((sec, i) => {
   s.className = 'slide';
   s.dataset.section = sec.id;
   s.innerHTML = `<div class="slide-inner wide">
-      <span class="eyebrow">Section ${i + 1} of ${SECTIONS.length}</span>
-      <h1 class="slide-title">${esc(sec.title)}</h1>
-      <p class="slide-sub">${esc(sec.sub)}</p>
-      <p class="hover-hint">not sure about something? skip it — we’ll clarify it together</p>
+      <span class="eyebrow sec-eyebrow">Section ${i + 1} of ${SECTIONS.length}</span>
+      <h1 class="slide-title sec-title">${esc(sec.title)}</h1>
+      <p class="slide-sub sec-sub">${esc(sec.sub)}</p>
+      <p class="hover-hint sec-hint">not sure about something? skip it — we’ll clarify it together</p>
       <div class="q-grid">${sec.questions.map(renderQ).join('')}</div>
     </div>`;
   filesSlide.before(s);
@@ -472,9 +951,10 @@ function slideIndexOf(sectionId){ return slides.findIndex(s => s.dataset.section
 function updateNav(){
   [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === current));
   const back = document.getElementById('backBtn'), next = document.getElementById('nextBtn');
-  back.style.display = current === 0 ? 'none' : '';
-  next.style.display = (current === 0 || current === TOTAL - 1) ? 'none' : '';
-  next.textContent = current === TOTAL - 2 ? 'View Summary →' : 'Next →';
+  back.style.display = current <= 1 ? 'none' : '';
+  next.style.display = (current <= 1 || current === TOTAL - 1) ? 'none' : '';
+  back.textContent = t('back');
+  next.textContent = current === TOTAL - 2 ? t('viewSummary') : t('next');
 }
 function goTo(i){
   if(i < 0 || i >= TOTAL || i === current) return;
@@ -560,7 +1040,7 @@ function addQFiles(id, list){
     if(f.size > MAX_FILE_MB * 1024 * 1024){ tooBig.push(f.name); return; }
     if(!qFiles[id].some(x => fileKey(x) === fileKey(f))) qFiles[id].push(f);
   });
-  if(tooBig.length) alert(`Too large to upload (over ${MAX_FILE_MB} MB): ${tooBig.join(', ')}`);
+  if(tooBig.length) alert(t('tooBigQ', {mb: MAX_FILE_MB, names: tooBig.join(', ')}));
   renderQFiles(id);
 }
 function removeQFile(id, i){ qFiles[id].splice(i, 1); renderQFiles(id); }
@@ -583,7 +1063,7 @@ function addFiles(list){
     if(!files.some(x => fileKey(x) === fileKey(f))) files.push(f);
   });
   const warn = document.getElementById('fileWarn');
-  warn.textContent = tooBig.length ? `Too large to upload here (over ${MAX_FILE_MB} MB): ${tooBig.join(', ')}. Please share a link to it below instead.` : '';
+  warn.textContent = tooBig.length ? t('tooBig', {mb: MAX_FILE_MB, names: tooBig.join(', ')}) : '';
   warn.classList.toggle('show', tooBig.length > 0);
   renderFiles();
 }
@@ -602,17 +1082,15 @@ function renderSummary(){
     const answered = sec.questions.map(q => [q, answerOf(q)]).filter(r => r[1].length);
     open += sec.questions.length - answered.length;
     let vals = answered.map(([q, v]) =>
-      `<div class="sum-item"><span class="sum-q">${esc(q.label)}</span>${v.map(x => `<span class="pill">${esc(x)}</span>`).join('')}</div>`
+      `<div class="sum-item"><span class="sum-q">${esc(qLabel(q))}</span>${v.map(x => `<span class="pill">${esc(optText(q, x))}</span>`).join('')}</div>`
     ).join('');
     if(sec.id === 'filesup' && files.length){
-      vals += `<div class="sum-item"><span class="sum-q">Attached files</span>${files.map(f => `<span class="pill">📎 ${esc(f.name)}</span>`).join('')}</div>`;
+      vals += `<div class="sum-item"><span class="sum-q">${esc(t('attached'))}</span>${files.map(f => `<span class="pill">📎 ${esc(f.name)}</span>`).join('')}</div>`;
     }
-    if(!vals) vals = '<span class="empty-pick">Nothing filled in — we’ll go through it together</span>';
-    return `<tr><td class="cat-cell">${esc(sec.title)}<button class="edit-link" onclick="goTo(${slideIndexOf(sec.id)})">Edit →</button></td><td>${vals}</td></tr>`;
+    if(!vals) vals = '<span class="empty-pick">' + esc(t('empty')) + '</span>';
+    return `<tr><td class="cat-cell">${esc(secTitle(sec))}<button class="edit-link" onclick="goTo(${slideIndexOf(sec.id)})">${esc(t('edit'))}</button></td><td>${vals}</td></tr>`;
   }).join('');
-  document.getElementById('openNote').textContent = open
-    ? `✦ ${open} question${open === 1 ? '' : 's'} left open — no problem, your manager will clarify them with you.`
-    : '✦ Everything is filled in — amazing, thank you!';
+  document.getElementById('openNote').textContent = open ? t('openN', {n: open}) : t('allDone');
 }
 function buildSummaryText(){
   const lines = ['PicShot Studio — Technical Requirements', 'Date: ' + new Date().toLocaleDateString('en-GB'), ''];
@@ -635,7 +1113,7 @@ function answersObject(){
   return out;
 }
 function clearAll(){
-  if(!confirm('Clear all answers and attached files?')) return;
+  if(!confirm(t('confirmClear'))) return;
   document.querySelectorAll('.q input[type="checkbox"], .q input[type="radio"]').forEach(i => i.checked = false);
   document.querySelectorAll('.q-text').forEach(t => t.value = '');
   document.querySelectorAll('.q').forEach(q => q.classList.remove('answered'));
@@ -676,7 +1154,7 @@ async function sendToUs(){
     goTo(slideIndexOf('art'));
     const el = document.getElementById('q_company');
     setTimeout(() => { el.classList.remove('field-error'); void el.offsetWidth; el.classList.add('field-error'); el.focus(); }, 380);
-    alert('Please fill in Company / contact name — so we know who to reply to.');
+    alert(t('needName'));
     return;
   }
   if(!ENDPOINT){
@@ -690,18 +1168,19 @@ async function sendToUs(){
   if(!submissionId) submissionId = new Date().toISOString().slice(0,10) + '_' + Math.random().toString(36).slice(2,8);
   const btn = document.getElementById('sendBtn');
   btn.disabled = true;
+  setProgress(t('preparing'), 0);
   document.getElementById('progressModal').classList.add('show');
   try{
     const ups = allUploads();
     const total = ups.length + 1;
     for(let i = 0; i < ups.length; i++){
       const {f, name} = ups[i];
-      setProgress(`Uploading file ${i + 1} of ${ups.length}: ${name}`, i / total);
+      setProgress(t('uploading', {i: i + 1, n: ups.length, name}), i / total);
       if(uploaded.has(name + '|' + fileKey(f))) continue;
       await post({ action:'upload', submissionId, company, fileName:name, mimeType:f.type || 'application/octet-stream', data:await toBase64(f) });
       uploaded.add(name + '|' + fileKey(f));
     }
-    setProgress('Saving your answers…', ups.length / total);
+    setProgress(t('saving'), ups.length / total);
     await post({
       action:'submit', submissionId, company,
       links:textVal('links'),
@@ -709,17 +1188,86 @@ async function sendToUs(){
       answers:answersObject(),
       summaryText:buildSummaryText()
     });
-    setProgress('Done!', 1);
+    setProgress(t('done'), 1);
     document.getElementById('progressModal').classList.remove('show');
     document.getElementById('successModal').classList.add('show');
-    btn.textContent = '✓ Sent — thank you!';
+    btn.textContent = t('sent');
   }catch(err){
     document.getElementById('progressModal').classList.remove('show');
     btn.disabled = false;
-    alert('Something went wrong while sending (' + err.message + '). Please check your connection and press “Send to Us” again — files that were already uploaded won’t be sent twice.');
+    alert(t('sendError', {err: err.message}));
   }
 }
 
+
+/* ---------- apply the current language to the whole page ---------- */
+const EN_TEXT = {};
+document.querySelectorAll('[data-i18n]').forEach(el => { if(!(el.dataset.i18n in EN_TEXT)) EN_TEXT[el.dataset.i18n] = el.innerHTML; });
+function applyQuestions(){
+  SECTIONS.forEach((sec, i) => {
+    const s = document.querySelector('.slide[data-section="' + sec.id + '"]');
+    if(!s) return;
+    const tr = LANG === 'en' ? null : QTR[LANG].sec[sec.id];
+    s.querySelector('.sec-eyebrow').textContent = t('section', {i: i + 1, n: SECTIONS.length});
+    s.querySelector('.sec-title').textContent = (tr && tr.title) || sec.title;
+    s.querySelector('.sec-sub').textContent = (tr && tr.sub) || sec.sub;
+    s.querySelector('.sec-hint').textContent = t('secHint');
+  });
+  ALL_SECTIONS.forEach(sec => sec.questions.forEach(q => {
+    const box = document.querySelector('.q[data-id="' + q.id + '"]');
+    if(!box) return;
+    const tr = qtr(q) || {};
+    box.querySelector('.q-label').textContent = tr.label || q.label;
+    const hint = box.querySelector('.q-hint');
+    if(hint) hint.textContent = tr.hint || q.hint || '';
+    const field = box.querySelector('#q_' + q.id);
+    if(field) field.setAttribute('placeholder', tr.placeholder || q.placeholder || '');
+    const other = box.querySelector('.q-detail');
+    if(other) other.setAttribute('placeholder', tr.otherPlaceholder || q.otherPlaceholder || t('own'));
+    if(q.options){
+      box.querySelectorAll('.opt').forEach((lab, i) => {
+        const en = q.options[i], o = tr.options ? tr.options[i] : en;
+        lab.querySelector('.opt-text').textContent = typeof o === 'string' ? o : o.v;
+        const d = lab.querySelector('.opt-desc');
+        if(d) d.textContent = typeof o === 'string' ? '' : o.d;
+      });
+    }
+    const dzT = box.querySelector('.q-dz-title'), dzS = box.querySelector('.q-dz-sub');
+    if(dzT) dzT.innerHTML = t('dzQ');
+    if(dzS) dzS.textContent = t('dzQSub', {mb: MAX_FILE_MB});
+  }));
+}
+function setLang(lang){
+  if(lang === 'ua') lang = 'uk';
+  if(!['en','uk','ru'].includes(lang)) lang = 'en';
+  LANG = lang;
+  document.documentElement.lang = lang;
+  const d = I18N[lang] || {};
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.dataset.i18n;
+    el.innerHTML = lang === 'en' ? EN_TEXT[k] : (d[k] || EN_TEXT[k]);
+  });
+  document.querySelectorAll('[data-lang-btn]').forEach(b => b.classList.toggle('active', b.dataset.langBtn === lang));
+  document.querySelectorAll('.lang-card').forEach(c => c.classList.toggle('current', c.getAttribute('onclick') === "pickLang('" + lang + "')"));
+  try{ localStorage.setItem('picshot_lang', lang); }catch(e){}
+  applyQuestions();
+  updateNav();
+  renderSummary();
+}
+function pickLang(lang){ setLang(lang); goTo(1); }
+
+(function initLang(){
+  let saved = null;
+  try{ saved = new URLSearchParams(location.search).get('lang') || localStorage.getItem('picshot_lang'); }catch(e){}
+  setLang(saved || 'en');
+  if(saved){
+    /* language already chosen (e.g. in the first form) — open straight on the intro */
+    slides[0].classList.remove('active');
+    current = 1;
+    slides[1].classList.add('active');
+    updateNav();
+  }
+})();
 updateNav();
 renderSummary();
 </script>
